@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ki-coach-frontend
+  namespace: ki-coach-frontend
+spec:
+  replicas: 1
+  revisionHistoryLimit: 2
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: ki-coach-frontend
+  template:
+    metadata:
+      labels:
+        app: ki-coach-frontend
+    spec:
+      imagePullSecrets:
+        - name: regcred
+      containers:
+        - name: ki-coach-frontend
+          image: ghcr.io/kaiolefoerst-collab/kicoach_react:d5dc5b09b1866175dfbaf8da2898278188d6edb1
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 3000
+          env:
+            - name: BACKEND_URL
+              value: "http://ki-coach-backend.ki-coach:8000"

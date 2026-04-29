@@ -1,0 +1,24 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ki-coach-frontend
+  namespace: ki-coach-frontend
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-dns
+spec:
+  ingressClassName: traefik-external
+  tls:
+    - hosts:
+        - kicoach.foerst.haus
+      secretName: ki-coach-frontend-tls
+  rules:
+    - host: kicoach.foerst.haus
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: ki-coach-frontend
+                port:
+                  number: 3000

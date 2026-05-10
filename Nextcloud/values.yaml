@@ -1,9 +1,9 @@
 nextcloud:
   host: nextcloud.foerst.haus
   image:
-    registry: ghcr.io
+    registry: docker.io
     repository: nextcloud
-    tag: "29"
+    tag: "latest"
   existingSecret:
     enabled: true
     secretName: nextcloud-secret
@@ -52,9 +52,9 @@ mariadb:
 postgresql:
   enabled: true
   image:
-    registry: ghcr.io
+    registry: docker.io
     repository: bitnami/postgresql
-    tag: "16"
+    tag: "latest"
   global:
     postgresql:
       auth:
@@ -73,9 +73,9 @@ postgresql:
 redis:
   enabled: true
   image:
-    registry: ghcr.io
+    registry: docker.io
     repository: bitnami/redis
-    tag: "7"
+    tag: "latest"
   auth:
     enabled: true
     existingSecret: nextcloud-secret

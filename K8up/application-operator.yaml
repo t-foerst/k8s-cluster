@@ -1,0 +1,26 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: k8up-operator
+  namespace: argocd
+spec:
+  project: default
+  sources:
+    - repoURL: https://charts.k8up.io
+      chart: k8up
+      targetRevision: "2.*"
+      helm:
+        valueFiles:
+          - $values/K8up/values.yaml
+    - repoURL: https://github.com/t-foerst/k8s-cluster.git
+      targetRevision: HEAD
+      ref: values
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: k8up
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true

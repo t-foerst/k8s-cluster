@@ -65,6 +65,8 @@ postgresql:
           userPasswordKey: postgresql-password
           adminPasswordKey: postgresql-admin-password
   primary:
+    podAnnotations:
+      k8up.io/backup: "true"
     persistence:
       enabled: true
       storageClass: longhorn-ssd
@@ -111,6 +113,9 @@ startupProbe:
 
 strategy:
   type: Recreate
+
+podAnnotations:
+  k8up.io/backup: "true"
 
 # Nextcloud cronjob for background tasks
 cronjob:

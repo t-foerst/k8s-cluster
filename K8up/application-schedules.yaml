@@ -1,0 +1,18 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: k8up-schedules
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/t-foerst/k8s-cluster.git
+    targetRevision: HEAD
+    path: K8up
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: k8up
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true

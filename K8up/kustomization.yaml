@@ -1,0 +1,7 @@
+resources:
+  - schedules/audiobookshelf.yaml
+  - schedules/homarr.yaml
+  - schedules/nextcloud.yaml
+  - schedules/paperless-ngx.yaml
+  - schedules/uptime-kuma.yaml
+  - schedules/vaultwarden.yaml

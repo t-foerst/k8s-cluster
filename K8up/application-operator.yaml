@@ -6,9 +6,9 @@ metadata:
 spec:
   project: default
   sources:
-    - repoURL: https://charts.k8up.io
+    - repoURL: https://k8up-io.github.io/k8up
       chart: k8up
-      targetRevision: "2.*"
+      targetRevision: "*"
       helm:
         valueFiles:
           - $values/K8up/values.yaml
@@ -24,3 +24,4 @@ spec:
       selfHeal: true
     syncOptions:
       - CreateNamespace=true
+      - ServerSideApply=true

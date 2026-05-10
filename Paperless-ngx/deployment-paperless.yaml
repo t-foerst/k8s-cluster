@@ -14,8 +14,6 @@ spec:
     metadata:
       labels:
         app: paperless-ngx
-      annotations:
-        k8up.io/backup: "true"
     spec:
       containers:
         - name: paperless-ngx

@@ -15,8 +15,6 @@ spec:
     metadata:
       labels:
         app: homarr
-      annotations:
-        k8up.io/backup: "true"
     spec:
       containers:
         - name: homarr

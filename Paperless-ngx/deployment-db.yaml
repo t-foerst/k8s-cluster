@@ -14,8 +14,6 @@ spec:
     metadata:
       labels:
         app: paperless-db
-      annotations:
-        k8up.io/backup: "true"
     spec:
       containers:
         - name: postgres

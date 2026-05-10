@@ -14,8 +14,6 @@ spec:
     metadata:
       labels:
         app: audiobookshelf
-      annotations:
-        k8up.io/backup: "true"
     spec:
       securityContext:
         fsGroup: 1000

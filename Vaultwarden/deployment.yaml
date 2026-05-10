@@ -12,8 +12,6 @@ spec:
     metadata:
       labels:
         app: vaultwarden
-      annotations:
-        k8up.io/backup: "true"
     spec:
       containers:
       - name: vaultwarden

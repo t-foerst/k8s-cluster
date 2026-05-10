@@ -68,7 +68,7 @@ postgresql:
     persistence:
       enabled: true
       storageClass: longhorn-ssd
-      size: 6Gi
+      size: 1Gi
 
 redis:
   enabled: true
@@ -80,6 +80,9 @@ redis:
     enabled: true
     existingSecret: nextcloud-secret
     existingSecretPasswordKey: redis-password
+  master:
+    persistence:
+      enabled: false
 
 resources:
   requests:

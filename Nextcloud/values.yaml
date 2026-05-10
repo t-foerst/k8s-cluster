@@ -71,21 +71,7 @@ postgresql:
       size: 1Gi
 
 redis:
-  enabled: true
-  image:
-    registry: docker.io
-    repository: bitnami/redis
-    tag: "latest"
-  auth:
-    enabled: true
-    existingSecret: nextcloud-secret
-    existingSecretPasswordKey: redis-password
-  master:
-    persistence:
-      enabled: false
-  replica:
-    persistence:
-      enabled: false
+  enabled: false
 
 resources:
   requests:

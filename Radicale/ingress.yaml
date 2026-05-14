@@ -1,0 +1,24 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: radicale
+  namespace: radicale
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-dns
+spec:
+  ingressClassName: traefik
+  tls:
+    - hosts:
+        - radicale.foerst.haus
+      secretName: radicale-tls
+  rules:
+    - host: radicale.foerst.haus
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: radicale
+                port:
+                  number: 5232

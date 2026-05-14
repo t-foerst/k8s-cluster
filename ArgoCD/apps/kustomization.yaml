@@ -5,3 +5,4 @@ resources:
   - audiobookshelf.yaml
   - uptime-kuma.yaml
   - nextcloud.yaml
+  - radicale.yaml

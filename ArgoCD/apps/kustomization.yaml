@@ -6,3 +6,4 @@ resources:
   - uptime-kuma.yaml
   - nextcloud.yaml
   - radicale.yaml
+  - ml-game.yaml

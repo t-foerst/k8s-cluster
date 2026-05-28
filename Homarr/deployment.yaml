@@ -16,6 +16,7 @@ spec:
       labels:
         app: homarr
     spec:
+      nodeName: kworker1
       containers:
         - name: homarr
           image: ghcr.io/homarr-labs/homarr:latest

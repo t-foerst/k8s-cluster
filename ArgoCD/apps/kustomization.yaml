@@ -1,6 +1,5 @@
 resources:
   - vaultwarden.yaml
-  - homarr.yaml
   - paperless-ngx.yaml
   - audiobookshelf.yaml
   - uptime-kuma.yaml

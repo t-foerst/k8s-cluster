@@ -3,6 +3,5 @@ resources:
   - paperless-ngx.yaml
   - audiobookshelf.yaml
   - uptime-kuma.yaml
-  - nextcloud.yaml
   - radicale.yaml
   - network-policies.yaml

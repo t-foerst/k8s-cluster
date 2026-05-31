@@ -1,5 +1,5 @@
 nextcloud:
-  host: nextcloud.foerst.haus
+  host: cloud.foerst.haus
   image:
     registry: docker.io
     repository: nextcloud
@@ -38,7 +38,7 @@ ingress:
   tls:
     - secretName: nextcloud-tls
       hosts:
-        - nextcloud.foerst.haus
+        - cloud.foerst.haus
 
 persistence:
   enabled: true

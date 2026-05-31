@@ -5,3 +5,4 @@ resources:
   - uptime-kuma.yaml
   - nextcloud.yaml
   - radicale.yaml
+  - network-policies.yaml

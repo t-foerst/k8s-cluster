@@ -1,5 +1,8 @@
 resources:
   - vaultwarden.yaml
+  - paperless-ngx.yaml
+  - audiobookshelf.yaml
   - uptime-kuma.yaml
   - radicale.yaml
   - network-policies.yaml
+  - nextcloud.yaml

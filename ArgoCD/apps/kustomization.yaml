@@ -1,5 +1,4 @@
 resources:
   - vaultwarden.yaml
-  - uptime-kuma.yaml
   - radicale.yaml
   - network-policies.yaml

@@ -1,10 +1,10 @@
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: paperless-media-nfs
+  name: nextcloud-data-nfs
 spec:
   capacity:
-    storage: 50Gi
+    storage: 3Ti
   accessModes:
     - ReadWriteOnce
   persistentVolumeReclaimPolicy: Retain
@@ -15,18 +15,18 @@ spec:
     - noatime
   nfs:
     server: 10.10.20.220
-    path: /mnt/flex/paperless-ngx
+    path: /mnt/flex/nextcloud-data
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: paperless-media
-  namespace: paperless-ngx
+  name: nextcloud-data
+  namespace: nextcloud
 spec:
   accessModes:
     - ReadWriteOnce
   resources:
     requests:
-      storage: 50Gi
+      storage: 3Ti
   storageClassName: ""
-  volumeName: paperless-media-nfs
+  volumeName: nextcloud-data-nfs

@@ -42,9 +42,7 @@ ingress:
 
 persistence:
   enabled: true
-  storageClass: longhorn-hdd
-  accessMode: ReadWriteOnce
-  size: 3Ti
+  existingClaim: nextcloud-data
 
 mariadb:
   enabled: false

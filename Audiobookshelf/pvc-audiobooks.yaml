@@ -1,4 +1,23 @@
 apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: abs-audiobooks-nfs
+spec:
+  capacity:
+    storage: 500Gi
+  accessModes:
+    - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: ""
+  mountOptions:
+    - hard
+    - nfsvers=4.1
+    - noatime
+  nfs:
+    server: 10.10.20.220
+    path: /mnt/Media/audiobooks
+---
+apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: abs-audiobooks
@@ -9,4 +28,5 @@ spec:
   resources:
     requests:
       storage: 500Gi
-  storageClassName: longhorn-hdd
+  storageClassName: ""
+  volumeName: abs-audiobooks-nfs

@@ -1,2 +1,12 @@
 resources:
+  - namespace.yaml
   - pvc-data.yaml
+  - pvc-html.yaml
+  - pvc-db.yaml
+  - deployment-db.yaml
+  - service-db.yaml
+  - deployment-nextcloud.yaml
+  - service-nextcloud.yaml
+  - ingress.yaml
+  - configmap.yaml
+  - cronjob.yaml

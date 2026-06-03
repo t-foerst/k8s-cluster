@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: nextcloud-config
+  namespace: nextcloud
+data:
+  custom.config.php: |
+    <?php
+    $CONFIG = array(
+      'trusted_domains' => ['localhost', 'cloud.foerst.haus'],
+      'overwriteprotocol' => 'https',
+      'overwrite.cli.url' => 'https://cloud.foerst.haus',
+      'default_phone_region' => 'DE',
+      'loglevel' => 2,
+      'maintenance_window_start' => 1,
+    );

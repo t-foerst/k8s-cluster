@@ -6,7 +6,7 @@ spec:
   capacity:
     storage: 3Ti
   accessModes:
-    - ReadWriteOnce
+    - ReadWriteMany
   persistentVolumeReclaimPolicy: Retain
   storageClassName: ""
   mountOptions:
@@ -24,7 +24,7 @@ metadata:
   namespace: nextcloud
 spec:
   accessModes:
-    - ReadWriteOnce
+    - ReadWriteMany
   resources:
     requests:
       storage: 3Ti

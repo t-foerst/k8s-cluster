@@ -1,4 +1,2 @@
 resources:
-  - vaultwarden.yaml
   - radicale.yaml
-  - network-policies.yaml

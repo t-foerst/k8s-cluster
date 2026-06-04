@@ -14,20 +14,20 @@ spec:
         app: vaultwarden
     spec:
       containers:
-      - name: vaultwarden
-        image: vaultwarden/server:latest
-        ports:
-        - containerPort: 80
-        env:
-        - name: ADMIN_TOKEN
-          valueFrom:
-            secretKeyRef:
-              name: vaultwarden-secret
-              key: ADMIN_TOKEN
-        volumeMounts:
-        - name: data
-          mountPath: /data
+        - name: vaultwarden
+          image: vaultwarden/server:latest
+          ports:
+            - containerPort: 80
+          env:
+            - name: ADMIN_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: vaultwarden-secret
+                  key: ADMIN_TOKEN
+          volumeMounts:
+            - name: data
+              mountPath: /data
       volumes:
-      - name: data
-        persistentVolumeClaim:
-          claimName: vaultwarden-data
+        - name: data
+          persistentVolumeClaim:
+            claimName: vaultwarden-data-new

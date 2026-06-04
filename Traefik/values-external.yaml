@@ -13,6 +13,8 @@ providers:
   kubernetesIngress:
     enabled: true
     ingressClass: traefik-external
+    publishedService:
+      enabled: true
 resources:
   requests:
     cpu: 50m

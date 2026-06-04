@@ -10,5 +10,6 @@ resources:
   - jellyfin.yaml
   - metallb-operator.yaml
   - metallb-config.yaml
+  - traefik-crds.yaml
   - traefik-internal.yaml
   - traefik-external.yaml

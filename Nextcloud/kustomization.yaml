@@ -9,4 +9,3 @@ resources:
   - service-nextcloud.yaml
   - ingress.yaml
   - configmap.yaml
-  - cronjob.yaml

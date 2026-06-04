@@ -1,2 +1,4 @@
 resources:
   - radicale.yaml
+  - metallb-operator.yaml
+  - metallb-config.yaml

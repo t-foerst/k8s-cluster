@@ -1,0 +1,11 @@
+USER-SUPPLIED VALUES:
+ports:
+  web:
+    nodePort: 32080
+  websecure:
+    nodePort: 32443
+providers:
+  kubernetesIngress:
+    ingressClass: traefik-external
+service:
+  type: NodePort

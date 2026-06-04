@@ -9,6 +9,7 @@ resources:
   - metallb-operator.yaml
   - metallb-config.yaml
   - nextcloud.yaml
+  - kube-vip.yaml
   - traefik-crds.yaml
   - traefik-internal.yaml
   - traefik-external.yaml

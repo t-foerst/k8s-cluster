@@ -14,14 +14,22 @@ spec:
     spec:
       serviceAccountName: kube-vip
       hostNetwork: true
-      nodeSelector:
-        node-role.kubernetes.io/control-plane: "true"
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+              - matchExpressions:
+                  - key: node-role.kubernetes.io/control-plane
+                    operator: Exists
       tolerations:
         - effect: NoSchedule
           key: node-role.kubernetes.io/control-plane
           operator: Exists
         - effect: NoSchedule
           key: node-role.kubernetes.io/master
+          operator: Exists
+        - effect: NoExecute
+          key: CriticalAddonsOnly
           operator: Exists
       containers:
         - name: kube-vip

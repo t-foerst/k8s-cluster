@@ -5,4 +5,3 @@ resources:
   - radicale.yaml
   - paperless-ngx.yaml
   - nextcloud.yaml
-  - uptime-kuma.yaml

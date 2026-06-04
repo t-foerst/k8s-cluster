@@ -5,8 +5,7 @@ ingressClass:
 service:
   type: LoadBalancer
   annotations:
-    metallb.universe.tf/address-pool: external-pool
-    metallb.universe.tf/loadBalancerIPs: 10.10.20.40
+    metallb.universe.tf/loadBalancerIPs: "10.10.20.140"
 providers:
   kubernetesCRD:
     enabled: true

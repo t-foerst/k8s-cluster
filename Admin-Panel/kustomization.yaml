@@ -1,0 +1,3 @@
+resources:
+  - headlamp-admin.yml
+  - headlampIngress.yml

@@ -5,6 +5,8 @@ resources:
   - pvc-db.yaml
   - deployment-db.yaml
   - service-db.yaml
+  - deployment-redis.yaml
+  - service-redis.yaml
   - deployment-nextcloud.yaml
   - service-nextcloud.yaml
   - ingress.yaml

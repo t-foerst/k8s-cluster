@@ -8,6 +8,7 @@ resources:
   - jellyfin.yaml
   - metallb-operator.yaml
   - metallb-config.yaml
+  - nextcloud.yaml
   - traefik-crds.yaml
   - traefik-internal.yaml
   - traefik-external.yaml

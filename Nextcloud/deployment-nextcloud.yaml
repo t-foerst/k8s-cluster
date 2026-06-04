@@ -56,6 +56,15 @@ spec:
               value: 512M
             - name: PHP_UPLOAD_LIMIT
               value: 10G
+            - name: REDIS_HOST
+              value: nextcloud-redis
+            - name: REDIS_HOST_PORT
+              value: "6379"
+            - name: REDIS_HOST_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: nextcloud-secret
+                  key: redis-password
           volumeMounts:
             - name: nextcloud-html
               mountPath: /var/www/html

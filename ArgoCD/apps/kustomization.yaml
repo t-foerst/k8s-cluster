@@ -1,4 +1,13 @@
 resources:
+  - vaultwarden.yaml
+  - homarr.yaml
+  - paperless-ngx.yaml
+  - audiobookshelf.yaml
   - radicale.yaml
+  - network-policies.yaml
+  - nextcloud.yaml
+  - jellyfin.yaml
   - metallb-operator.yaml
   - metallb-config.yaml
+  - traefik-internal.yaml
+  - traefik-external.yaml

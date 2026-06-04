@@ -1,0 +1,25 @@
+ingressClass:
+  enabled: true
+  isDefaultClass: false
+  name: traefik-external
+service:
+  type: LoadBalancer
+  annotations:
+    metallb.universe.tf/address-pool: external-pool
+    metallb.universe.tf/loadBalancerIPs: 10.10.20.40
+providers:
+  kubernetesCRD:
+    enabled: true
+    ingressClass: traefik-external
+  kubernetesIngress:
+    enabled: true
+    ingressClass: traefik-external
+resources:
+  requests:
+    cpu: 50m
+    memory: 64Mi
+  limits:
+    memory: 256Mi
+logs:
+  general:
+    level: WARN

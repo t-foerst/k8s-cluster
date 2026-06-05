@@ -1,7 +1,0 @@
-resources:
-  - vaultwarden.yaml
-  - homarr.yaml
-  - audiobookshelf.yaml
-  - radicale.yaml
-  - paperless-ngx.yaml
-  - nextcloud.yaml

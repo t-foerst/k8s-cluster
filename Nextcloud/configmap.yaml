@@ -13,4 +13,6 @@ data:
       'default_phone_region' => 'DE',
       'loglevel' => 2,
       'maintenance_window_start' => 1,
+      'trusted_proxies' => ['10.0.0.0/8', '172.16.0.0/12', '192.168.0.0/16'],
+      'forwarded_for_headers' => ['HTTP_X_FORWARDED_FOR'],
     );

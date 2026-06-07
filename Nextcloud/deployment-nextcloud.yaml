@@ -112,6 +112,25 @@ spec:
               memory: 512Mi
             limits:
               memory: 2Gi
+        - name: cron
+          image: docker.io/nextcloud:latest
+          imagePullPolicy: IfNotPresent
+          command:
+            - /bin/sh
+            - -c
+            - |
+              while true; do
+                php /var/www/html/cron.php
+                sleep 300
+              done
+          volumeMounts:
+            - name: nextcloud-html
+              mountPath: /var/www/html
+            - name: nextcloud-data
+              mountPath: /var/www/html/data
+            - name: nextcloud-config
+              mountPath: /var/www/html/config/custom.config.php
+              subPath: custom.config.php
       volumes:
         - name: nextcloud-config
           configMap:

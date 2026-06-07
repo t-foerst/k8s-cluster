@@ -9,5 +9,6 @@ resources:
   - service-redis.yaml
   - deployment-nextcloud.yaml
   - service-nextcloud.yaml
+  - middleware.yaml
   - ingress.yaml
   - configmap.yaml

@@ -115,6 +115,9 @@ spec:
         - name: cron
           image: docker.io/nextcloud:latest
           imagePullPolicy: IfNotPresent
+          securityContext:
+            runAsUser: 33 # www-data
+            runAsGroup: 33
           command:
             - /bin/sh
             - -c

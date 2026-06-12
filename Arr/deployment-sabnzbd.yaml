@@ -36,14 +36,14 @@ spec:
               mountPath: /downloads
           readinessProbe:
             httpGet:
-              path: /sabnzbd/api?mode=version
+              path: /api?mode=version
               port: http
             initialDelaySeconds: 20
             periodSeconds: 15
             timeoutSeconds: 5
           livenessProbe:
             httpGet:
-              path: /sabnzbd/api?mode=version
+              path: /api?mode=version
               port: http
             initialDelaySeconds: 60
             periodSeconds: 30

@@ -29,6 +29,8 @@ spec:
               value: "1000"
             - name: TZ
               value: Europe/Berlin
+            - name: SABNZBD__MISC__HOST_WHITELIST
+              value: "sabnzbd.foerst.haus"
           volumeMounts:
             - name: config
               mountPath: /config

@@ -2,13 +2,13 @@ resources:
   - namespace.yaml
   - pvc-downloads.yaml
   - pvc-media.yaml
-  - pvc-config-qbittorrent.yaml
+  - pvc-config-sabnzbd.yaml
   - pvc-config-prowlarr.yaml
   - pvc-config-sonarr.yaml
   - pvc-config-radarr.yaml
-  - deployment-qbittorrent.yaml
-  - service-qbittorrent.yaml
-  - ingress-qbittorrent.yaml
+  - deployment-sabnzbd.yaml
+  - service-sabnzbd.yaml
+  - ingress-sabnzbd.yaml
   - deployment-prowlarr.yaml
   - service-prowlarr.yaml
   - ingress-prowlarr.yaml

@@ -1,7 +1,7 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: qbittorrent
+  name: sabnzbd
   namespace: arr
   annotations:
     cert-manager.io/cluster-issuer: letsencrypt-dns
@@ -9,16 +9,16 @@ spec:
   ingressClassName: traefik-internal
   tls:
     - hosts:
-        - qbittorrent.foerst.haus
-      secretName: qbittorrent-tls
+        - sabnzbd.foerst.haus
+      secretName: sabnzbd-tls
   rules:
-    - host: qbittorrent.foerst.haus
+    - host: sabnzbd.foerst.haus
       http:
         paths:
           - path: /
             pathType: Prefix
             backend:
               service:
-                name: qbittorrent
+                name: sabnzbd
                 port:
                   number: 8080

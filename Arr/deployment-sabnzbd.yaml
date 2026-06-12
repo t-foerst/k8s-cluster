@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: qbittorrent
+  name: sabnzbd
   namespace: arr
 spec:
   replicas: 1
@@ -9,15 +9,15 @@ spec:
     type: Recreate
   selector:
     matchLabels:
-      app: qbittorrent
+      app: sabnzbd
   template:
     metadata:
       labels:
-        app: qbittorrent
+        app: sabnzbd
     spec:
       containers:
-        - name: qbittorrent
-          image: lscr.io/linuxserver/qbittorrent:latest
+        - name: sabnzbd
+          image: lscr.io/linuxserver/sabnzbd:latest
           imagePullPolicy: IfNotPresent
           ports:
             - name: http
@@ -29,8 +29,6 @@ spec:
               value: "1000"
             - name: TZ
               value: Europe/Berlin
-            - name: WEBUI_PORT
-              value: "8080"
           volumeMounts:
             - name: config
               mountPath: /config
@@ -38,14 +36,14 @@ spec:
               mountPath: /downloads
           readinessProbe:
             httpGet:
-              path: /
+              path: /sabnzbd/api?mode=version
               port: http
             initialDelaySeconds: 20
             periodSeconds: 15
             timeoutSeconds: 5
           livenessProbe:
             httpGet:
-              path: /
+              path: /sabnzbd/api?mode=version
               port: http
             initialDelaySeconds: 60
             periodSeconds: 30
@@ -59,7 +57,7 @@ spec:
       volumes:
         - name: config
           persistentVolumeClaim:
-            claimName: qbittorrent-config
+            claimName: sabnzbd-config
         - name: downloads
           persistentVolumeClaim:
             claimName: arr-downloads

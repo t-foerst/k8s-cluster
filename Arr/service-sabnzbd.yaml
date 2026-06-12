@@ -1,11 +1,11 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: qbittorrent
+  name: sabnzbd
   namespace: arr
 spec:
   selector:
-    app: qbittorrent
+    app: sabnzbd
   ports:
     - name: http
       port: 8080

@@ -1,5 +1,6 @@
 resources:
   - headlamp.yaml
+  - arr.yaml
   - vaultwarden.yaml
   - homarr.yaml
   - paperless-ngx.yaml

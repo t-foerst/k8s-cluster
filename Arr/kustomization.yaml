@@ -1,0 +1,20 @@
+resources:
+  - namespace.yaml
+  - pvc-downloads.yaml
+  - pvc-media.yaml
+  - pvc-config-qbittorrent.yaml
+  - pvc-config-prowlarr.yaml
+  - pvc-config-sonarr.yaml
+  - pvc-config-radarr.yaml
+  - deployment-qbittorrent.yaml
+  - service-qbittorrent.yaml
+  - ingress-qbittorrent.yaml
+  - deployment-prowlarr.yaml
+  - service-prowlarr.yaml
+  - ingress-prowlarr.yaml
+  - deployment-sonarr.yaml
+  - service-sonarr.yaml
+  - ingress-sonarr.yaml
+  - deployment-radarr.yaml
+  - service-radarr.yaml
+  - ingress-radarr.yaml

@@ -25,6 +25,8 @@ spec:
           env:
             - name: MACHINE_LEARNING_CACHE_FOLDER
               value: /cache
+            - name: IMMICH_PORT
+              value: "3003"
           volumeMounts:
             - name: ml-cache
               mountPath: /cache

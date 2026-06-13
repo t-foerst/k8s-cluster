@@ -1,0 +1,26 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: immich
+  namespace: immich
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-dns
+    # Große Uploads (Videos, RAW-Fotos) erlauben
+    traefik.ingress.kubernetes.io/router.middlewares: immich-immich-upload@kubernetescrd
+spec:
+  ingressClassName: traefik-external
+  tls:
+    - hosts:
+        - photos.foerst.haus
+      secretName: immich-tls
+  rules:
+    - host: photos.foerst.haus
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: immich
+                port:
+                  number: 2283

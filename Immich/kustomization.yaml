@@ -1,0 +1,15 @@
+resources:
+  - namespace.yaml
+  - pvc-library.yaml
+  - pvc-db.yaml
+  - pvc-ml-cache.yaml
+  - deployment-db.yaml
+  - service-db.yaml
+  - deployment-redis.yaml
+  - service-redis.yaml
+  - deployment-machine-learning.yaml
+  - service-machine-learning.yaml
+  - deployment-immich.yaml
+  - service-immich.yaml
+  - middleware.yaml
+  - ingress.yaml

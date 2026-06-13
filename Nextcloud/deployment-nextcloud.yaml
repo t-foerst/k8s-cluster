@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: nextcloud
-          image: docker.io/nextcloud:latest
+          image: docker.io/nextcloud:34-apache
           imagePullPolicy: IfNotPresent
           ports:
             - name: http

@@ -17,3 +17,13 @@ spec:
   headers:
     customRequestHeaders:
       X-Forwarded-Proto: https
+---
+apiVersion: traefik.io/v1alpha1
+kind: ServersTransport
+metadata:
+  name: immich-transport
+  namespace: immich
+spec:
+  forwardingTimeouts:
+    responseHeaderTimeout: 0s
+    idleConnTimeout: 0s

@@ -7,6 +7,7 @@ metadata:
     cert-manager.io/cluster-issuer: letsencrypt-dns
     # Große Uploads (Videos, RAW-Fotos) erlauben
     traefik.ingress.kubernetes.io/router.middlewares: immich-immich-upload@kubernetescrd,immich-immich-headers@kubernetescrd
+    traefik.ingress.kubernetes.io/service.servertransport: immich-immich-transport@kubernetescrd
 spec:
   ingressClassName: traefik-external
   tls:

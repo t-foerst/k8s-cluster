@@ -15,7 +15,7 @@ spec:
     - noatime
   nfs:
     server: 10.10.20.220
-    path: /mnt/flex/paperless-ngx
+    path: /mnt/Main/paperless
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim

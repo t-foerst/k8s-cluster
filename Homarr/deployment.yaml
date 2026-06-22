@@ -16,6 +16,7 @@ spec:
       labels:
         app: homarr
     spec:
+      serviceAccountName: homarr
       containers:
         - name: homarr
           image: ghcr.io/homarr-labs/homarr:latest

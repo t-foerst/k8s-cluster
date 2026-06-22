@@ -2,6 +2,7 @@ resources:
   - headlamp.yaml
   - arr.yaml
   - immich.yaml
+  - dokuwiki.yaml
   - vaultwarden.yaml
   - homarr.yaml
   - paperless-ngx.yaml

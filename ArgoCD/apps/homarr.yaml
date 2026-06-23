@@ -5,10 +5,16 @@ metadata:
   namespace: argocd
 spec:
   project: default
-  source:
-    repoURL: https://github.com/t-foerst/k8s-cluster.git
-    targetRevision: HEAD
-    path: Homarr
+  sources:
+    - repoURL: https://homarr-labs.github.io/charts
+      chart: homarr
+      targetRevision: "*"
+      helm:
+        valueFiles:
+          - $values/Homarr/values.yaml
+    - repoURL: https://github.com/t-foerst/k8s-cluster.git
+      targetRevision: HEAD
+      ref: values
   destination:
     server: https://kubernetes.default.svc
     namespace: homarr
@@ -18,3 +24,4 @@ spec:
       selfHeal: true
     syncOptions:
       - CreateNamespace=true
+      - ServerSideApply=true

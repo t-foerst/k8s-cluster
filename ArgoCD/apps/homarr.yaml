@@ -8,7 +8,7 @@ spec:
   sources:
     - repoURL: https://homarr-labs.github.io/charts
       chart: homarr
-      targetRevision: "*"
+      targetRevision: "1.67.0"
       helm:
         valueFiles:
           - $values/Homarr/values.yaml

@@ -18,6 +18,11 @@ spec:
       containers:
         - name: postgres
           image: postgres:16
+          args:
+            - "-c"
+            - "max_connections=200"
+            - "-c"
+            - "shared_buffers=256MB"
           imagePullPolicy: IfNotPresent
           ports:
             - name: postgres
@@ -48,9 +53,9 @@ spec:
           resources:
             requests:
               cpu: 50m
-              memory: 128Mi
+              memory: 256Mi
             limits:
-              memory: 512Mi
+              memory: 2Gi
       volumes:
         - name: db-data
           persistentVolumeClaim:

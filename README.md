@@ -1,129 +1,86 @@
 # k8s-cluster
 
-GitOps repository for my personal Kubernetes homelab cluster. All workloads are managed declaratively via ArgoCD and deployed to the `foerst.haus` domain with automatic TLS through Let's Encrypt + Cloudflare DNS.
+A GitOps-managed homelab Kubernetes cluster (K3s). Every workload, every config change, every rollout goes through Git and ArgoCD — never a manual `kubectl apply` against the live cluster.
 
-The cluster runs in a **private network and is not reachable from the internet**. DNS resolves the `foerst.haus` subdomains internally only. Cloudflare is used exclusively for the DNS-01 ACME challenge to obtain valid TLS certificates — no traffic is routed through Cloudflare.
+This repo exists as both a working personal infrastructure setup and a sandbox for platform-engineering patterns used in production environments: declarative config, App-of-Apps, an HA control plane, separate ingress tiers for internal vs. public traffic, and Helm/Kustomize side-by-side in the same repo.
 
 ---
 
 ## Architecture
 
 ```
-Local Network (private, no public exposure)
-    │
-    ▼
-Traefik (Ingress Controller)
-    │
-    ├── cert-manager (Let's Encrypt via Cloudflare DNS-01 — certificates only)
-    │
-    ├── ArgoCD          argocd.foerst.haus
-    ├── Longhorn UI     lhorn.foerst.haus
-    ├── Homarr          (dashboard)
-    ├── Vaultwarden     (passwords)
-    ├── Paperless-ngx   paperless.foerst.haus
-    ├── Audiobookshelf  (audiobooks)
-    ├── Uptime Kuma     (monitoring)
-    ├── KI-Coach        (custom AI app)
-    └── MinIO           (object storage)
+Git (this repo)
+   │  watched by
+   ▼
+ArgoCD  ──  App-of-Apps (ArgoCD/apps/)  ──▶  one child Application per workload
+   │
+   ▼
+K3s cluster — HA control plane via kube-vip
+   │
+   ├── Traefik (internal)  →  private services   [traefik-internal IngressClass]
+   ├── Traefik (external)  →  public-facing apps  [traefik-external IngressClass]
+   ├── MetalLB              →  L2 LoadBalancer IPs for both Traefik instances
+   ├── cert-manager         →  Let's Encrypt via Cloudflare DNS-01 (no inbound exposure needed)
+   ├── Longhorn             →  replicated block storage (SSD tier)
+   └── static NFS PVs       →  bulk media/library storage backed by a TrueNAS box
 ```
+
+Two ingress controllers exist on purpose: `traefik-internal` keeps admin/private tools off the public internet, `traefik-external` is the only path exposed beyond the LAN. Each app's Ingress just picks the class it needs.
 
 ---
 
-## Infrastructure
+## How a workload gets deployed
 
-| Component | Purpose |
+Every entry in `ArgoCD/apps/` is one ArgoCD `Application`, using one of two patterns:
+
+| Pattern | When it's used |
 |---|---|
-| **ArgoCD** | GitOps continuous deployment — watches this repo and applies changes |
-| **Longhorn** | Distributed block storage with SSD and HDD storage classes (3 replicas each) |
-| **Traefik** | Ingress controller — routes external traffic into the cluster |
-| **cert-manager** | Automatic TLS certificates via Let's Encrypt (Cloudflare DNS-01 challenge) |
-| **Headlamp** | Web-based Kubernetes admin panel |
+| **Plain Kustomize manifests** | No official Helm chart, or I want full control over every manifest |
+| **Multi-source Helm** (upstream chart + values from this repo) | Upstream project ships and maintains a chart |
+
+Adding, removing, or migrating an app between patterns only touches that app's own folder and one line in `ArgoCD/apps/kustomization.yaml` — nothing else in the repo depends on what's currently deployed.
 
 ---
 
-## Services
+## What's running
 
-| Service | Description | Stack |
-|---|---|---|
-| **Vaultwarden** | Self-hosted Bitwarden-compatible password manager | `vaultwarden/server` |
-| **Homarr** | Home dashboard for all services | `homarr-labs/homarr` |
-| **Paperless-ngx** | Document management system | `paperless-ngx` + PostgreSQL + Redis |
-| **Audiobookshelf** | Audiobook & podcast server | `advplyr/audiobookshelf` |
-| **Uptime Kuma** | Uptime monitoring and status pages | `louislam/uptime-kuma` |
-| **KI-Coach** | Custom AI coaching app (Gemini-powered) | React frontend + Python backend |
-| **MinIO** | S3-compatible object storage | `minio/minio` |
+The cluster hosts a self-hosted alternative to a range of common SaaS tools — media streaming, photo backup, document management, password management, a download/automation stack, a dashboard, and more. The exact, always-current list is the ArgoCD Application set itself:
 
----
-
-## Repository Structure
-
-```
-k8s-cluster/
-│
-├── ArgoCD/                  # Ingress for ArgoCD UI
-├── Admin-Panel/             # Headlamp ServiceAccount + ClusterRoleBinding
-├── Longhorn/                # Storage classes (SSD/HDD) + Ingress
-│
-├── Audiobookshelf/          # Deployment, Service, Ingress, PVCs
-├── Homarr/                  # Deployment, Service, Ingress, PVC
-├── Paperless-ngx/           # Paperless + PostgreSQL + Redis
-├── UptimeKuma/              # Deployment, Service, Ingress, PVC
-├── Vaultwarden/             # Deployment, Service, Ingress, PVC
-│
-├── ki-coach-backend/        # Python/FastAPI backend (Gemini API)
-├── ki-coach-frontend/       # React frontend
-│
-├── secrets/                 # Kubernetes Secret manifests (not committed in plain text)
-│
-└── clusterissuer-cloudflare.yml   # cert-manager ClusterIssuer (Let's Encrypt + Cloudflare)
+```bash
+ls ArgoCD/apps/
 ```
 
-Each application directory follows this pattern:
-- `namespace.yaml` — dedicated namespace
-- `deployment.yaml` — workload definition
-- `service.yaml` — internal ClusterIP service
-- `ingress.yaml` — Traefik ingress with TLS
-- `pvc-*.yaml` — PersistentVolumeClaims (backed by Longhorn)
-- `kustomization.yaml` — Kustomize manifest list
+This README intentionally doesn't enumerate individual apps — that list changes far more often than the platform underneath it.
 
 ---
 
 ## Storage
 
-Longhorn provides two storage classes:
-
-| StorageClass | Disk | Replicas |
+| Tier | Backing | Used for |
 |---|---|---|
-| `longhorn-ssd` | SSD (diskSelector: `ssd`) | 3 |
-| `longhorn-hdd` | HDD (diskSelector: `hdd`) | 3 |
-
----
-
-## TLS / Certificates
-
-All ingresses use the `letsencrypt-dns` ClusterIssuer, which solves the ACME DNS-01 challenge via a Cloudflare API token. This means valid Let's Encrypt certificates are issued without any inbound internet access — the cluster only needs outbound HTTPS to reach the Let's Encrypt and Cloudflare APIs. Certificates are requested automatically when an Ingress with the annotation `cert-manager.io/cluster-issuer: letsencrypt-dns` is created.
-
----
+| `longhorn-ssd` | Replicated (3x) block storage on local SSD | databases, app config — small, latency-sensitive |
+| Static NFS PVs | TrueNAS share | media libraries, large bulk data |
 
 ## Secrets
 
-Secrets are stored as Kubernetes Secret manifests in the `secrets/` directory. These contain sensitive values and are **not committed in plain text** — they must be applied manually or managed via a secrets solution (e.g. Sealed Secrets, External Secrets Operator).
+Kept out of Git entirely. `secrets/` is gitignored; apps that need a secret ship a placeholder template (`*-secret.yaml`) so the real values can be applied manually post-clone:
 
 ```bash
-kubectl apply -f secrets/
+kubectl apply -f secrets/<app>-secret.yaml
+```
+
+## Repo layout
+
+```
+<App>/                  one folder per workload — manifests or Helm values
+ArgoCD/apps/             one Application manifest per workload (the actual deployment graph)
+ArgoCD/root-app.yaml     bootstraps everything above — applied once, manually
+secrets/                 gitignored Secret templates
+clusterissuer-cloudflare.yml
 ```
 
 ---
 
-## Applying Manifests
+## Stack
 
-Individual apps can be applied with Kustomize:
-
-```bash
-kubectl apply -k Paperless-ngx/
-kubectl apply -k Vaultwarden/
-kubectl apply -k Homarr/
-# etc.
-```
-
-Or let ArgoCD handle it automatically by pointing an Application resource at this repository.
+Kubernetes (K3s) · ArgoCD · Helm · Kustomize · Traefik · MetalLB · kube-vip · Longhorn · NFS · cert-manager · Let's Encrypt (Cloudflare DNS-01)

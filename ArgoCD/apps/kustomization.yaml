@@ -7,7 +7,6 @@ resources:
   - homarr.yaml
   - paperless-ngx.yaml
   - audiobookshelf.yaml
-  - radicale.yaml
   - jellyfin.yaml
   - metallb-operator.yaml
   - metallb-config.yaml

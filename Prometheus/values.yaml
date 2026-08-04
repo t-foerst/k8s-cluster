@@ -21,6 +21,24 @@ server:
       - secretName: prometheus-tls
         hosts:
           - prometheus.foerst.haus
+  extraSecretMounts:
+    - name: home-assistant-token
+      mountPath: /etc/secrets/home-assistant
+      subPath: ""
+      secretName: home-assistant-token
+      readOnly: true
+
+# Externe Geräte außerhalb des Clusters (nicht per Pod-Annotation discoverbar)
+extraScrapeConfigs: |
+  - job_name: 'home-assistant'
+    metrics_path: /api/prometheus
+    scheme: http
+    bearer_token_file: /etc/secrets/home-assistant/token
+    static_configs:
+      - targets: ['ha.home.arpa:8123']
+  - job_name: 'truenas'
+    static_configs:
+      - targets: ['10.10.20.220:9100']
 
 # Kein eigenes Alerting - Grafana läuft extern und übernimmt Visualisierung/Alerts
 alertmanager:

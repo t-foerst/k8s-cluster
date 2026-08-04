@@ -1,0 +1,42 @@
+server:
+  retention: "10d"
+  persistentVolume:
+    enabled: true
+    storageClass: longhorn-ssd
+    size: 5Gi
+  resources:
+    requests:
+      cpu: 100m
+      memory: 512Mi
+    limits:
+      memory: 1Gi
+  ingress:
+    enabled: true
+    ingressClassName: traefik-internal
+    annotations:
+      cert-manager.io/cluster-issuer: letsencrypt-dns
+    hosts:
+      - prometheus.foerst.haus
+    tls:
+      - secretName: prometheus-tls
+        hosts:
+          - prometheus.foerst.haus
+
+# Kein eigenes Alerting - Grafana läuft extern und übernimmt Visualisierung/Alerts
+alertmanager:
+  enabled: false
+
+prometheus-pushgateway:
+  enabled: false
+
+kube-state-metrics:
+  enabled: true
+
+prometheus-node-exporter:
+  enabled: true
+  resources:
+    requests:
+      cpu: 10m
+      memory: 32Mi
+    limits:
+      memory: 64Mi

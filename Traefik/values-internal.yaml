@@ -24,3 +24,8 @@ resources:
 logs:
   general:
     level: WARN
+deployment:
+  podAnnotations:
+    prometheus.io/scrape: "true"
+    prometheus.io/port: "9100"
+    prometheus.io/path: /metrics

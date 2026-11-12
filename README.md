@@ -1,10 +1,10 @@
 # k8s-cluster
 
-> **Status: archived.** This was my homelab setup from March to September 2026. It worked as intended, but an HA control plane, replicated storage and GitOps for every change turned out to be overkill for day-to-day use, so I replaced it with a much simpler single-node setup: [k3s-homelab](https://github.com/t-foerst/k3s-homelab). Kept public as a reference.
+> **Status: archived.** This was my homelab setup from March to September 2026. It worked as intended, but a multi-master control plane, replicated storage and GitOps for every change turned out to be overkill for day-to-day use, so I replaced it with a much simpler single-node setup: [k3s-homelab](https://github.com/t-foerst/k3s-homelab). Kept public as a reference.
 
 A GitOps-managed homelab Kubernetes cluster (K3s). Every workload, every config change, every rollout goes through Git and ArgoCD — never a manual `kubectl apply` against the live cluster.
 
-This repo exists as both a working personal infrastructure setup and a sandbox for platform-engineering patterns used in production environments: declarative config, App-of-Apps, an HA control plane, separate ingress tiers for internal vs. public traffic, and Helm/Kustomize side-by-side in the same repo.
+This repo exists as both a working personal infrastructure setup and a sandbox for platform-engineering patterns used in production environments: declarative config, App-of-Apps, a multi-master control plane, separate ingress tiers for internal vs. public traffic, and Helm/Kustomize side-by-side in the same repo.
 
 ---
 
@@ -17,7 +17,8 @@ Git (this repo)
 ArgoCD  ──  App-of-Apps (ArgoCD/apps/)  ──▶  one child Application per workload
    │
    ▼
-K3s cluster — HA control plane via kube-vip
+K3s cluster — 2 server nodes behind a kube-vip virtual IP
+   │              (shared external PostgreSQL datastore, single instance)
    │
    ├── Traefik (internal)  →  private services   [traefik-internal IngressClass]
    ├── Traefik (external)  →  public-facing apps  [traefik-external IngressClass]

@@ -1,5 +1,7 @@
 # k8s-cluster
 
+> **Status: archived.** This was my homelab setup from March to September 2026. It worked as intended, but an HA control plane, replicated storage and GitOps for every change turned out to be overkill for day-to-day use, so I replaced it with a much simpler single-node setup: [k3s-homelab](https://github.com/t-foerst/k3s-homelab). Kept public as a reference.
+
 A GitOps-managed homelab Kubernetes cluster (K3s). Every workload, every config change, every rollout goes through Git and ArgoCD — never a manual `kubectl apply` against the live cluster.
 
 This repo exists as both a working personal infrastructure setup and a sandbox for platform-engineering patterns used in production environments: declarative config, App-of-Apps, an HA control plane, separate ingress tiers for internal vs. public traffic, and Helm/Kustomize side-by-side in the same repo.
